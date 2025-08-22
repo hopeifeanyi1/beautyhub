@@ -457,7 +457,8 @@ const Landing = () => {
                 your income, and run your own product shop. Beauty Hub makes it
                 simple to book, teach, and sell without the extra hassle.
               </motion.p>
-              <motion.button
+              <motion.a
+              href="/login"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -467,7 +468,7 @@ const Landing = () => {
                 className="bg-white text-[#6B46C1] px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
               >
                 Get Started
-              </motion.button>
+              </motion.a>
             </motion.div>
 
             {/* Right Content - Feature Cards */}

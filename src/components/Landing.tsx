@@ -163,9 +163,9 @@ const Landing = () => {
               >
                 Shop
               </a>
-              <button className="bg-[#ffffff] text-[#411900] px-6 py-3 rounded-xl font-semibold hover:bg-[#ffffff]/60 transition-colors mt-4 self-start">
+              <Link href="/login" className="bg-[#ffffff] text-[#411900] px-6 py-3 rounded-xl font-semibold hover:bg-[#ffffff]/60 transition-colors mt-4 self-start">
                 Get Started
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}

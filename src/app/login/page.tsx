@@ -1,9 +1,15 @@
+// Updated Login component
 'use client'
 import React, { useState } from "react";
 import Image from "next/image";
 import { B, BeautyHub, LoginGirl } from "../../../public";
+import { useRouter } from "next/navigation";
+import { useUser } from "../../components/context/UserContext"; // Import the context
 
 const Login = () => {
+  const router = useRouter();
+  const { setUser } = useUser(); // Use the context
+  
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -20,7 +26,14 @@ const Login = () => {
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    // Handle login logic here
+    
+    // Set user data in context
+    setUser({
+      fullName: formData.fullName,
+      email: formData.email
+    });
+    
+    router.push('/dashboard');
     console.log('Login data:', formData);
   };
 
@@ -97,7 +110,7 @@ const Login = () => {
           </div>
 
           {/* Login Form */}
-          <div className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Full Name Field */}
             <div>
               <label htmlFor="fullName" className="block text-[#2F1167] text-md font-semibold mb-1">
@@ -111,6 +124,7 @@ const Login = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your full name"
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 outline-none transition-colors text-gray-900 placeholder-gray-400"
+                required
               />
             </div>
 
@@ -127,6 +141,7 @@ const Login = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your email address"
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 outline-none transition-colors text-gray-900 placeholder-gray-400"
+                required
               />
             </div>
 
@@ -141,15 +156,15 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                placeholder="Create a password"
+                placeholder="Enter your password"
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 outline-none transition-colors text-gray-900 placeholder-gray-400"
+                required
               />
             </div>
 
             {/* Login Button */}
             <button
-              type="button"
-              onClick={handleSubmit}
+              type="submit"
               className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#5F14EA] text-white py-3.5 px-4 rounded-xl font-semibold transition-all duration-300 text-base mt-8"
             >
               Log In
@@ -198,7 +213,7 @@ const Login = () => {
                 </a>
               </p>
             </div>
-          </div>
+          </form>
         </div>
       </div>
 

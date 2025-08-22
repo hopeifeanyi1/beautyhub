@@ -2,8 +2,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { B, BeautyHub, LoginGirl } from "../../../public";
+import { useRouter } from "next/navigation";
+import { useUser } from "../../components/context/UserContext"; 
 
-const Login = () => {
+const SignUp = () => {
+  const router = useRouter();
+  const { setUser } = useUser(); // Use the context
+  
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -20,13 +25,25 @@ const Login = () => {
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login data:', formData);
+    
+    // Set user data in context
+    setUser({
+      fullName: formData.fullName,
+      email: formData.email
+    });
+    
+    router.push('/dashboard');
+    console.log('Signup data:', formData);
   };
 
-  const handleGoogleLogin = () => {
-    // Handle Google login logic here
-    console.log('Google login clicked');
+  const handleGoogleSignUp = () => {
+    // Handle Google signup logic here
+    // For demo purposes, you might set a default Google user
+    // setUser({
+    //   fullName: "Google User", // You'd get this from Google API
+    //   email: "user@gmail.com"
+    // });
+    console.log('Google signup clicked');
   };
 
   return (
@@ -70,7 +87,7 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
+      {/* Right Side - Signup Form */}
       <div className="w-full lg:w-1/2 bg-white flex items-center justify-center p-4 sm:p-6 lg:p-8">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
@@ -82,7 +99,7 @@ const Login = () => {
           {/* Mobile Welcome Text */}
           <div className="lg:hidden text-center mb-8">
             <h1 className="text-[#411900] text-2xl sm:text-3xl font-bold mb-4">
-              Welcome Back!
+              Join BeautyHUB Today!
             </h1>
             <p className="text-gray-600 text-base">
               Connect with fellow artists and grow your career
@@ -96,8 +113,8 @@ const Login = () => {
             </h2>
           </div>
 
-          {/* Login Form */}
-          <div className="space-y-5">
+          {/* Signup Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Full Name Field */}
             <div>
               <label htmlFor="fullName" className="block text-[#2F1167] text-md font-semibold mb-1">
@@ -111,6 +128,7 @@ const Login = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your full name"
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 outline-none transition-colors text-gray-900 placeholder-gray-400"
+                required
               />
             </div>
 
@@ -127,6 +145,7 @@ const Login = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your email address"
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 outline-none transition-colors text-gray-900 placeholder-gray-400"
+                required
               />
             </div>
 
@@ -143,14 +162,35 @@ const Login = () => {
                 onChange={handleInputChange}
                 placeholder="Create a password"
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 outline-none transition-colors text-gray-900 placeholder-gray-400"
+                required
+                minLength={6}
               />
             </div>
 
-            {/* Login Button */}
+            {/* Terms and Conditions */}
+            <div className="flex items-start space-x-3 mt-4">
+              <input
+                type="checkbox"
+                id="terms"
+                className="mt-1 w-4 h-4 text-[#8B5CF6] border-gray-300 rounded focus:ring-[#8B5CF6] focus:ring-2"
+                required
+              />
+              <label htmlFor="terms" className="text-sm text-gray-600 leading-5">
+                I agree to the{' '}
+                <a href="#" className="text-[#8B5CF6] hover:text-[#7C3AED] font-medium">
+                  Terms of Service
+                </a>{' '}
+                and{' '}
+                <a href="#" className="text-[#8B5CF6] hover:text-[#7C3AED] font-medium">
+                  Privacy Policy
+                </a>
+              </label>
+            </div>
+
+            {/* Signup Button */}
             <button
-              type="button"
-              onClick={handleSubmit}
-              className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#5F14EA] text-white py-3.5 px-4 rounded-xl font-semibold transition-all duration-300 text-base mt-8"
+              type="submit"
+              className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#5F14EA] text-white py-3.5 px-4 rounded-xl font-semibold transition-all duration-300 text-base mt-8 hover:from-[#7C3AED] hover:to-[#5B21B6]"
             >
               Get Started
             </button>
@@ -162,10 +202,10 @@ const Login = () => {
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
 
-            {/* Google Login Button */}
+            {/* Google Signup Button */}
             <button
               type="button"
-              onClick={handleGoogleLogin}
+              onClick={handleGoogleSignUp}
               className="w-full bg-white border border-gray-300 text-gray-700 py-3.5 px-4 rounded-xl font-medium hover:bg-gray-50 transition-colors text-base flex items-center justify-center space-x-3"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -186,19 +226,19 @@ const Login = () => {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              <span>Log in with Google</span>
+              <span>Sign up with Google</span>
             </button>
 
-            {/* Sign Up Link */}
+            {/* Login Link */}
             <div className="text-center mt-6">
               <p className="text-gray-600 text-sm">
                 Already have an Account?{' '}
-                <a href="login" className="text-[#8B5CF6] hover:text-[#7C3AED] font-medium transition-colors">
+                <a href="/login" className="text-[#8B5CF6] hover:text-[#7C3AED] font-medium transition-colors">
                   Log in
                 </a>
               </p>
             </div>
-          </div>
+          </form>
         </div>
       </div>
 
@@ -208,4 +248,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

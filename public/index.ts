@@ -10,6 +10,9 @@ import BeautyHub from './BeautyHUB.svg'
 import Laroche from './la-roche.svg'
 import Mac from './mac.svg'
 import LoginGirl from './LoginGirl.svg'
+import PaintImage1 from './PaintImage1.svg'
+import PaintImage2 from './PaintImage2.svg'
+import SectionGirl from './SectionGirl.svg'
 
 export {
     HeroBGImage,
@@ -23,5 +26,9 @@ export {
     BeautyHub,
     Laroche,
     Mac,
-    LoginGirl
+    LoginGirl,
+    PaintImage1,
+    PaintImage2,
+    SectionGirl,
+    
 }
